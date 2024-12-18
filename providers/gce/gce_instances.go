@@ -128,6 +128,7 @@ func (g *Cloud) NodeAddresses(ctx context.Context, nodeName types.NodeName) ([]v
 
 	instanceName := string(nodeName)
 
+	klog.Info("*********JAYESH: Before gMetaData*******", g.useMetadataServer)
 	if g.useMetadataServer {
 
 		// Use metadata server if possible
@@ -233,6 +234,7 @@ func (g *Cloud) NodeAddresses(ctx context.Context, nodeName types.NodeName) ([]v
 		return nil, fmt.Errorf("error while querying for instance: %v", err)
 	}
 
+	klog.Infof("*************JAYESH: Before Return Node Addresses************", instance.Name)
 	return g.nodeAddressesFromInstance(instance)
 }
 
@@ -285,6 +287,7 @@ func (g *Cloud) InstanceShutdown(ctx context.Context, node *v1.Node) (bool, erro
 }
 
 func (g *Cloud) nodeAddressesFromInstance(instance *compute.Instance) ([]v1.NodeAddress, error) {
+	klog.Infof("*************JAYESH: Inside NodeAddressesFromInstance************", instance.Name)
 	if len(instance.NetworkInterfaces) < 1 {
 		return nil, fmt.Errorf("could not find network interfaces for instanceID %q", instance.Id)
 	}
