@@ -204,6 +204,7 @@ func (g *Cloud) NodeAddresses(ctx context.Context, nodeName types.NodeName) ([]v
 			}
 
 			internalDNSFull, err := metadata.Get("instance/hostname")
+			fmt.Println("*************JAYESH: Internal DNS Full************", internalDNSFull)
 			if err != nil {
 				klog.Warningf("Couldn't get full internal DNS name: %v.", err)
 			} else {
@@ -211,7 +212,12 @@ func (g *Cloud) NodeAddresses(ctx context.Context, nodeName types.NodeName) ([]v
 					v1.NodeAddress{Type: v1.NodeInternalDNS, Address: internalDNSFull},
 					v1.NodeAddress{Type: v1.NodeHostName, Address: internalDNSFull},
 				)
+				fmt.Println("*************JAYESH: Node Addresses************", nodeAddresses)
 			}
+			for i, address := range nodeAddresses {
+				fmt.Println("*************JAYESH: Node Addresses ", i, address.Address, address.Type)
+			}
+
 			return g.orderAddresses(nodeAddresses), nil
 		}
 	}
